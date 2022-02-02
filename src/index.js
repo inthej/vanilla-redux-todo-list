@@ -13,9 +13,23 @@ const CLOSE_TODO = 'CLOSE_TODO'
 const TOGGLE_TODO = 'TOGGLE_TODO'
 
 // Action Create Function
-const addTodo = text => ({ type: ADD_TODO, text })
-const closeTodo = todoIdx => ({ type: CLOSE_TODO, todoIdx })
-const toggleTodo = todoIdx => ({ type: TOGGLE_TODO, todoIdx })
+const addTodo = text => {
+  return {
+    type: ADD_TODO,
+    text
+  }
+}
+const closeTodo = todoIdx => {
+  return {
+    type: CLOSE_TODO,
+    todoIdx
+  }
+}
+const toggleTodo = todoIdx => {
+  return {
+    type: TOGGLE_TODO, todoIdx
+  }
+}
 
 // InitialState
 const initialState = {
@@ -27,21 +41,28 @@ const initialState = {
 function reducer(state = initialState, action) {
   switch (action.type) {
     case ADD_TODO:
-      state = {...state, todoIndexRef: state.todoIndexRef + 1}
+      state = {
+        ...state,
+        todoIndexRef: state.todoIndexRef + 1
+      }
+
       const todo = {
         idx: state.todoIndexRef,
         checked: false,
         text: action.text,
       }
+
       return {
         ...state,
         todos: state.todos.concat(todo)
       }
+
     case CLOSE_TODO:
       return {
         ...state,
         todos: state.todos.filter(todo => todo.idx !== action.todoIdx)
       }
+
     case TOGGLE_TODO:
       return {
         ...state,
@@ -50,6 +71,7 @@ function reducer(state = initialState, action) {
           checked: !todo.checked
         } : todo)
       }
+
     default:
       return state
   }
@@ -105,7 +127,6 @@ const dispatchAddTodo = () => {
   if (isEmptyInput) {
     return
   }
-
   store.dispatch(addTodo(inputText))
   resetInput()
 }
